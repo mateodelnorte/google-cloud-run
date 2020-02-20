@@ -1,3 +1,4 @@
+REGION=us-central1
 PROJECT_ID=entrepreneurishment
 SERVICE_NAME=google-cloud-run-example
 
@@ -20,4 +21,7 @@ gcloud-ensure-project:
 	fi
 
 gcloud-deploy-image: gcloud-ensure-project
-	gcloud run deploy $(SERVICE_NAME) --image gcr.io/$(PROJECT_ID)/$(SERVICE_NAME) --platform managed --region us-central1 --allow-unauthenticated
+	gcloud run deploy $(SERVICE_NAME) --image gcr.io/$(PROJECT_ID)/$(SERVICE_NAME) --platform managed --region $(REGION) --allow-unauthenticated
+
+gcloud-get-deployed-url:
+	gcloud run services describe $(SERVICE_NAME) --platform=managed --region=$(REGION) | grep https://
